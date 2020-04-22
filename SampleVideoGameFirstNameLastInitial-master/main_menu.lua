@@ -54,7 +54,7 @@ end
 
 -- Creating Transition to Instructions Screen
 local function InstructionsTransition( )
-    composer.gotoScene( "Instructions Screen", {effect = "zoomInOutFade", time = 1000})
+    composer.gotoScene( "instructions_Screen", {effect = "zoomInOutFade", time = 1000})
 end    
 -----------------------------------------------------------------------------------------
 -- GLOBAL SCENE FUNCTIONS
