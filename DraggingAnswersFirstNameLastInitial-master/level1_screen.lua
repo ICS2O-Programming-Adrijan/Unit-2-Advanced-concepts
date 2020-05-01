@@ -38,7 +38,7 @@ local questionText
 local correctAnswer
 local alternateAnswer1
 local alternateAnswer2    
-
+local alternateAnswer3
 -- Variables containing the user answer and the actual answer
 local userAnswer
 
@@ -46,6 +46,7 @@ local userAnswer
 local answerboxAlreadyTouched = false
 local alternateAnswerBox1AlreadyTouched = false
 local alternateAnswerBox2AlreadyTouched = false
+local alternateAnswerBox3AlreadyTouched = false
 
 --create textboxes holding answer and alternate answers 
 local answerbox
@@ -180,6 +181,12 @@ end
 -- Transitioning Function to YouWin screen
 local function YouWinTransitionLevel1( )
     composer.gotoScene("you_win", {effect = "fade", time = 500})
+end
+
+
+-- Transitioning Function to YouWin screen
+local function YouLoseTransitionLevel1( )
+    composer.gotoScene("you_lose", {effect = "fade", time = 500})
 end
 
 -- Function to Restart Level 1
