@@ -82,8 +82,20 @@ local alreadyClickedAnswer = false
 -----------------------------------------------------------------------------------------
 -- SOUND
 -----------------------------------------------------------------------------------------
+local correctSound = audio.loadSound("Sounds/CorrectAnswer.mp3")
+local correctSoundChannel
 
+local wrongSound = audio.loadSound("Sounds/WrongBuzzer.mp3")
+local wrongSoundChannel
 
+local winnerSound = audio.loadSound("Sounds/youWinSound.wav")
+local winnerSoundChannel
+
+local loserSound = audio.loadSound("Sounds/Kids Booing.mp3")
+local loserSoundChannel
+
+local mainSound = audio.loadSound("Sounds/Level1Music.wav")
+local mainSoundChannel
 -----------------------------------------------------------------------------------------
 -- LOCAL FUNCTIONS
 -----------------------------------------------------------------------------------------
@@ -170,7 +182,7 @@ local function RestartScene()
     if (lives == 0) then
         LoseScreenTransition()
 
-    elseif (numberCorrect == 1) then
+    elseif (numberCorrect == 3) then
         WinScreenTransition()
     else 
 
