@@ -89,8 +89,8 @@ local winnerSoundChannel
 local loserSound = audio.loadSound("Sounds/YouLose.mp3")
 local loserSoundChannel
 
-local spikeSound = audio.loadSound("Sounds/Spring sound effect.mp3")
-local spikeSoundChannel
+local popSound = audio.loadSound("Sounds/pop.mp3")
+local popSoundChannel
 -----------------------------------------------------------------------------------------
 -- LOCAL SCENE FUNCTIONS
 ----------------------------------------------------------------------------------------- 
@@ -213,7 +213,7 @@ local function onCollision( self, event )
             (event.target.myName == "spikes3") then
 
             -- add sound effect here
-            spikeSoundChannel = audio.play(spikeSound)
+            popSoundChannel = audio.play(popSound)
             -- remove runtime listeners that move the character
             RemoveArrowEventListeners()
             RemoveRuntimeListeners()

@@ -28,9 +28,9 @@ local scene = composer.newScene( sceneName )
 local logo
 local bottom
 
---Spring sound effect
- local springsound = audio.loadSound( "Sounds/BoingSoundEffect.mp3" )
- local springSoundChannel
+--pop sound effect
+ local popSound = audio.loadSound( "Sounds/pop.mp3" )
+ local popSoundChannel
 
 -----------------------------------------------------------------------------------------
 -- LOCAL FUNCTIONS
@@ -41,15 +41,11 @@ local function gotoMainMenu()
 end
 
 --When this function is called, play the springt sound effect
- local function SpringSoundEffect( )
+ local function PopSoundEffect( )
     -- play sound
-    springSoundChannel = audio.play(springsound)
+    popSoundChannel = audio.play(popSound, {loops=0} )
  end
 
---When the game starts, it waits and calls this function
-local function SplashStart( )
-    timer.performWithDelay(1950, SpringSoundEffect)
-end
 
 
 
