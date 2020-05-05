@@ -88,6 +88,8 @@ local correctSoundChannel
 local wrongSound = audio.loadSound("Sounds/WrongBuzzer.mp3")
 local wrongSoundChannel
 
+local loserSound = audio.loadSound("Sounds/Kids Booing.mp3")
+local loserSoundChannel
 
 local mainSound = audio.loadSound("Sounds/level1Music.wav")
 local mainSoundChannel
