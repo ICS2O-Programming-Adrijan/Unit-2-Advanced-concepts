@@ -88,13 +88,8 @@ local correctSoundChannel
 local wrongSound = audio.loadSound("Sounds/WrongBuzzer.mp3")
 local wrongSoundChannel
 
-local winnerSound = audio.loadSound("Sounds/youWinSound.wav")
-local winnerSoundChannel
 
-local loserSound = audio.loadSound("Sounds/Kids Booing.mp3")
-local loserSoundChannel
-
-local mainSound = audio.loadSound("Sounds/Level1Music.wav")
+local mainSound = audio.loadSound("Sounds/level1Music.wav")
 local mainSoundChannel
 -----------------------------------------------------------------------------------------
 -- LOCAL FUNCTIONS
@@ -142,12 +137,12 @@ local function DisplayAnswers( )
 end
 
 -- Function that transitions to Lose Screen
-local function LoseScreenTransition( )        
+local function LoseScreenTransition( )  
     composer.gotoScene( "you_lose", {effect = "zoomInOutFade", time = 1000})
 end 
 
 -- Function that transitions to Win Screen
-local function WinScreenTransition( )        
+local function WinScreenTransition( ) 
     composer.gotoScene( "you_Win", {effect = "zoomInOutFade", time = 1000})
 end 
 
@@ -174,6 +169,7 @@ local function RestartScene()
 
     alreadyClickedAnswer = false
     correct.isVisible = false
+    incorrect.isVisible = false
 
     livesText.text = "Number of lives = " .. tostring(lives)
     numberCorrectText.text = "Number correct = " .. tostring(numberCorrect)
@@ -202,7 +198,8 @@ local function TouchListenerAnswer(touch)
         alreadyClickedAnswer = true
 
         -- if the user gets the answer right, display Correct and call RestartSceneRight
-        if (answer == tonumber(userAnswer)) then     
+        if (answer == tonumber(userAnswer)) then 
+            correctSoundChannel = audio.play(correctSound)    
             correct.isVisible = true
             -- increase the number correct by 1
             numberCorrect = numberCorrect + 1
@@ -223,6 +220,8 @@ local function TouchListenerWrongAnswer1(touch)
 
 
         if (answer ~= tonumber(userAnswer)) then
+            wrongSoundChannel = audio.play(wrongSound)
+            incorrect.isVisible = true
             -- decrease a life
             lives = lives - 1
             -- call RestartScene after 1 second
@@ -243,6 +242,8 @@ local function TouchListenerWrongAnswer2(touch)
 
 
             if (answer ~= tonumber(userAnswer)) then
+                wrongSoundChannel = audio.play(wrongSound)
+                incorrect.isVisible = true
                 -- decrease a life
                 lives = lives - 1
                 -- call RestartScene after 1 second
@@ -263,6 +264,8 @@ local function TouchListenerWrongAnswer3(touch)
 
 
             if (answer ~= tonumber(userAnswer)) then
+                wrongSoundChannel = audio.play(wrongSound)
+                incorrect.isVisible = true
                 -- decrease a life
                 lives = lives - 1
                 -- call RestartScene after 1 second
@@ -308,7 +311,7 @@ function scene:create( event )
     -- Creating a group that associates objects with the scene
     local sceneGroup = self.view
 
-    -----------------------------------------------------------------------------------------
+    -------------------------------------------s----------------------------------------------
 
     -- Insert the background image
     bkg = display.newImageRect("Images/Level 1 Screen.png", display.contentWidth, display.contentHeight)
@@ -345,6 +348,11 @@ function scene:create( event )
     correct:setTextColor(100/255, 47/255, 210/255)
     correct.isVisible = false
 
+    -- create the text object that will say Incorrect, set the colour and then hide it
+    incorrect = display.newText("Incorrect", display.contentWidth/2, display.contentHeight*1/3, nil, 50 )
+    incorrect:setTextColor(100/255, 47/255, 210/255)
+    incorrect.isVisible = false
+
     -- create the text object that will say Out of Time, set the colour and then hide it
     outOfTimeText = display.newText("Out of Time!", display.contentWidth*2/5, display.contentHeight*1/3, nil, 50)
     outOfTimeText:setTextColor(100/255, 47/255, 210/255)
@@ -362,10 +370,12 @@ function scene:create( event )
     sceneGroup:insert( answerTextObject )
     sceneGroup:insert( wrongAnswer1TextObject )
     sceneGroup:insert( wrongAnswer2TextObject )
-     sceneGroup:insert( wrongAnswer3TextObject )
+    sceneGroup:insert( wrongAnswer3TextObject )
     sceneGroup:insert( congratulationText )
     sceneGroup:insert( correct )
     sceneGroup:insert( level1Text )
+    sceneGroup:insert( incorrect )
+
 end
 
 -----------------------------------------------------------------------------------------
@@ -379,7 +389,6 @@ function scene:show( event )
     --local sceneGroup = self.view
     local phase = event.phase
 
-
     -----------------------------------------------------------------------------------------
 
     if ( phase == "will" ) then
@@ -388,9 +397,10 @@ function scene:show( event )
     -----------------------------------------------------------------------------------------
 
     elseif ( phase == "did" ) then
+         mainSoundChannel = audio.play(mainSound, { loops=-1} ) 
 
         -- initialize the number of lives and number correct 
-        lives = 3
+        lives = 2
         numberCorrect = 0
 
         -- listeners to each of the answer text objects
@@ -426,6 +436,7 @@ function scene:hide( event )
     -----------------------------------------------------------------------------------------
 
     elseif ( phase == "did" ) then
+        audio.stop(mainSoundChannel)
     end
 
 end

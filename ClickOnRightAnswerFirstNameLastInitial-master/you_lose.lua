@@ -43,9 +43,11 @@ local bkg
 
 -- The function called when the screen doesn't exist
 function scene:create( event )
-
     -- Creating a group that associates objects with the scene
     local sceneGroup = self.view
+
+    local loserSound = audio.loadSound("Sounds/Kids Booing.mp3")
+    local loserSoundChannel
 
     -- Display background
     bkg = display.newImage("Images/You Lose.png")
@@ -79,7 +81,7 @@ function scene:show( event )
     -----------------------------------------------------------------------------------------
 
     elseif ( phase == "did" ) then
-
+        loserSoundChannel = audio.play(loserSound)
         -- Called when the scene is now on screen.
         -- Insert code here to make the scene come alive.
         -- Example: start timers, begin animation, play audio, etc.
