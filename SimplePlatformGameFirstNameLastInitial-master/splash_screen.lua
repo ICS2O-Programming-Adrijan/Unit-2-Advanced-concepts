@@ -28,9 +28,7 @@ local scene = composer.newScene( sceneName )
 local logo
 local bottom
 
---pop sound effect
- local popSound = audio.loadSound( "Sounds/pop.mp3" )
- local popSoundChannel
+
 
 -----------------------------------------------------------------------------------------
 -- LOCAL FUNCTIONS
@@ -46,6 +44,10 @@ end
     popSoundChannel = audio.play(popSound, {loops=0} )
  end
 
+--When the game starts, it waits and calls this function
+local function PopStart( )
+    timer.performWithDelay(1950, PopSoundEffect)
+end
 
 
 

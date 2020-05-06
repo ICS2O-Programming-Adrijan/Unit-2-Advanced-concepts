@@ -52,16 +52,19 @@ local alternateAnswerBox3AlreadyTouched = false
 local answerbox
 local alternateAnswerBox1
 local alternateAnswerBox2
+local alternateAnswerBox3
 
 -- create variables that will hold the previous x- and y-positions so that 
 -- each answer will return back to its previous position after it is moved
 local answerboxPreviousY
 local alternateAnswerBox1PreviousY
 local alternateAnswerBox2PreviousY
+local alternateAnswerBox3PreviousY
 
 local answerboxPreviousX
 local alternateAnswerBox1PreviousX
 local alternateAnswerBox2PreviousX
+local alternateAnswerBox3PreviousX
 
 -- the black box where the user will drag the answer
 local userAnswerBoxPlaceholder
@@ -95,6 +98,7 @@ local function DisplayQuestion()
     answerboxAlreadyTouched = false
     alternateAnswerBox1AlreadyTouched = false
     alternateAnswerBox2AlreadyTouched = false
+    alternateAnswerBox3AlreadyTouched = false
 
 end
 
@@ -109,13 +113,17 @@ local function DetermineAlternateAnswers()
     alternateAnswer2 = correctAnswer - math.random(1, 2)
     alternateAnswerBox2.text = alternateAnswer2
 
+  -- generate incorrect answer and set it in the textbox
+    alternateAnswer3 = correctAnswer - math.random(6, 8)
+    alternateAnswerBox3.text = alternateAnswer3
 -------------------------------------------------------------------------------------------
 -- RESET ALL X POSITIONS OF ANSWER BOXES (because the x-position is changed when it is
 -- placed into the black box)
 -----------------------------------------------------------------------------------------
-    answerbox.x = display.contentWidth * 0.9
+    answerbox.x = display.contentWidth * 0.2
     alternateAnswerBox1.x = display.contentWidth * 0.9
     alternateAnswerBox2.x = display.contentWidth * 0.9
+    alternateAnswerBox3.x = display.contentWidth * 0.9
 
 
 end
@@ -131,16 +139,20 @@ local function PositionAnswers()
     -- random position 1
     if (randomPosition == 1) then
         -- set the new y-positions of each of the answers
-        answerbox.y = display.contentHeight * 0.4
+        answerbox.y = display.contentHeight * 0.8
 
         --alternateAnswerBox2
-        alternateAnswerBox2.y = display.contentHeight * 0.70
+        alternateAnswerBox2.y = display.contentHeight * 0.6
 
         --alternateAnswerBox1
-        alternateAnswerBox1.y = display.contentHeight * 0.55
+        alternateAnswerBox1.y = display.contentHeight * 0.4
+
+        --alternateAnswerBox3
+        alternateAnswerBox3.y = display.contentHeight * 0.2
 
         ---------------------------------------------------------
         --remembering their positions to return the answer in case it's wrong
+        alternateAnswerBox3PreviousY = alternateAnswerBox3.y
         alternateAnswerBox1PreviousY = alternateAnswerBox1.y
         alternateAnswerBox2PreviousY = alternateAnswerBox2.y
         answerboxPreviousY = answerbox.y 
@@ -148,15 +160,19 @@ local function PositionAnswers()
     -- random position 2
     elseif (randomPosition == 2) then
 
-        answerbox.y = display.contentHeight * 0.55
+        answerbox.y = display.contentHeight * 0.6
         
         --alternateAnswerBox2
         alternateAnswerBox2.y = display.contentHeight * 0.4
 
         --alternateAnswerBox1
-        alternateAnswerBox1.y = display.contentHeight * 0.7
+        alternateAnswerBox1.y = display.contentHeight * 0.2
+
+        --alternateAnswerBox3
+        alternateAnswerBox3.y = display.contentHeight * 0.8
 
         --remembering their positions to return the answer in case it's wrong
+        alternateAnswerBox3PreviousY = alternateAnswerBox3.y
         alternateAnswerBox1PreviousY = alternateAnswerBox1.y
         alternateAnswerBox2PreviousY = alternateAnswerBox2.y
         answerboxPreviousY = answerbox.y 
@@ -171,7 +187,11 @@ local function PositionAnswers()
         --alternateAnswerBox1
         alternateAnswerBox1.y = display.contentHeight * 0.4
 
+        --alternateAnswerBox3
+        alternateAnswerBox3.y = display.contentHeight * 0.4
+
         --remembering their positions to return the answer in case it's wrong
+            alternateAnswerBox3PreviousY = alternateAnswerBox3.y
         alternateAnswerBox1PreviousY = alternateAnswerBox1.y
         alternateAnswerBox2PreviousY = alternateAnswerBox2.y
         answerboxPreviousY = answerbox.y 
