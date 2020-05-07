@@ -68,10 +68,29 @@ local alternateAnswerBox3PreviousX
 
 -- the black box where the user will drag the answer
 local userAnswerBoxPlaceholder
+--------------------------------------------------------------------
+--SOUNDS
+-------------------------------------------------------------------
+
+
+
 
 -- sound effects
-local correctSound
-local booSound
+local correctSound = audio.load("Sounds/Correct.wav")
+local correctSoundChannel
+
+local booSound = audio.load("Sounds/boo.mp3")
+local booSoundChannel
+
+local winSound = audio.load("Sounds/yabbadabbalaugh.wav")
+local winSoundChannel
+
+local loseSound = audio.load("Sounds/youLoseSound.mp3")
+local loseSoundChannel
+-------------------------------------------------------------------------
+
+local points = 0 
+local lives = 0
 
 -----------------------------------------------------------------------------------------
 -- LOCAL FUNCTIONS
@@ -106,15 +125,15 @@ local function DetermineAlternateAnswers()
 
         
     -- generate incorrect answer and set it in the textbox
-    alternateAnswer1 = correctAnswer + math.random(3, 5)
+    alternateAnswer1 = correctAnswer + math.random(4, 7)
     alternateAnswerBox1.text = alternateAnswer1
 
     -- generate incorrect answer and set it in the textbox
-    alternateAnswer2 = correctAnswer - math.random(1, 2)
+    alternateAnswer2 = correctAnswer - math.random(1, 3)
     alternateAnswerBox2.text = alternateAnswer2
 
   -- generate incorrect answer and set it in the textbox
-    alternateAnswer3 = correctAnswer - math.random(6, 8)
+    alternateAnswer3 = correctAnswer - math.random(8, 10)
     alternateAnswerBox3.text = alternateAnswer3
 -------------------------------------------------------------------------------------------
 -- RESET ALL X POSITIONS OF ANSWER BOXES (because the x-position is changed when it is
@@ -212,12 +231,12 @@ end
 local function RestartLevel1()
     DisplayQuestion()
     DetermineAlternateAnswers()
-    PositionAnswers()    
+    PositionAnswers()   
 end
 
 -- Function to Check User Input
 local function CheckUserAnswerInput()
-          
+       PointsAndLivesCounter()   
     timer.performWithDelay(1600, RestartLevel1) 
 end
 
@@ -265,6 +284,22 @@ local function TouchListenerAnswerbox(touch)
         end
     end                
 end 
+function PointsAndLivesCounter()
+    if (userAnswer == correctAnswer) then
+        correctSoundChannel = audio.play(correctSound)
+        points = points + 1
+    else
+        lives = lives + 1
+    end
+
+    if (points == 3) then
+        YouWinTransitionLevel1()
+    end
+
+    if (lives == 2) then 
+        YouLoseTransitionLevel1()
+    end
+end
 
 local function TouchListenerAnswerBox1(touch)
     --only work if none of the other boxes have been touched
@@ -477,6 +512,14 @@ function scene:create( event )
     sceneGroup:insert( alternateAnswerBox2 )
     sceneGroup:insert( alternateAnswerBox3 )
     sceneGroup:insert( soccerball )
+    sceneGroup:insert( correctSound )
+    sceneGroup:insert( booSound )
+    sceneGroup:insert( winSound )
+    sceneGroup:insert( loseSound )
+
+
+
+
 
 end --function scene:create( event )
 
@@ -559,6 +602,8 @@ scene:addEventListener( "create", scene )
 scene:addEventListener( "show", scene )
 scene:addEventListener( "hide", scene )
 scene:addEventListener( "destroy", scene )
+
+
 
 -----------------------------------------------------------------------------------------
 
