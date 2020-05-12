@@ -91,6 +91,9 @@ local loserSoundChannel
 
 local popSound = audio.loadSound("Sounds/pop.mp3")
 local popSoundChannel
+
+local bkgMusic = audio.loadSound("Sounds/Music.mp3")
+local bkgMusicChannel
 -----------------------------------------------------------------------------------------
 -- LOCAL SCENE FUNCTIONS
 ----------------------------------------------------------------------------------------- 
@@ -594,6 +597,7 @@ function scene:show( event )
         -- Called when the scene is now on screen.
         -- Insert code here to make the scene come alive.
         -- Example: start timers, begin animation, play audio, etc.
+        bkgMusicChannel = audio.play(bkgMusic, {loops=-1, channel=1})
 
         numLives = 2
         questionsAnswered = 0
@@ -637,6 +641,8 @@ function scene:hide( event )
 
     elseif ( phase == "did" ) then
         -- Called immediately after scene goes off screen.
+        audio.stop(bkgMusicChannel)
+
         RemoveCollisionListeners()
         RemovePhysicsBodies()
 

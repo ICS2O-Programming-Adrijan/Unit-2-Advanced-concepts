@@ -38,6 +38,7 @@ local questionText
 local firstNumber
 local secondNumber
 
+
 local answer
 local wrongAnswer1
 local wrongAnswer2
@@ -59,6 +60,12 @@ local Y2 = display.contentHeight*5.5/7
 
 local userAnswer
 local textTouched = false
+
+---------------------------------------------------------------
+--SOUNDS
+---------------------------------------------------------------
+local correctSound = audio.load("Sounds/Correct-answer")
+local correctSoundChannel
 
 -----------------------------------------------------------------------------------------
 --LOCAL FUNCTIONS
