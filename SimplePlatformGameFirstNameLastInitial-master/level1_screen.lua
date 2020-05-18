@@ -80,6 +80,11 @@ local theBall
 
 local questionsAnswered = 0
 
+soundOn = true
+
+local muteButton
+local unmuteButton
+
 -----------------------------------------------------
 --sounds
 ----------------------------------------------------
@@ -98,6 +103,32 @@ local bkgMusicChannel
 -- LOCAL SCENE FUNCTIONS
 ----------------------------------------------------------------------------------------- 
  
+local function Mute(touch)
+    if (touch.phase == "ended") then
+        --pause the sound
+        audio.pause(bkgMusic)
+        -- set the boolean variable to be false( sound is now muted)
+        soundOn = false
+        -- hide the mute mute button 
+        muteButton.isVisible = false
+        -- make the unmute button visible 
+        unmuteButton.isVisible = true
+    end
+end
+
+local function Unmute(touch)
+    if (touch.phase == "ended") then
+        --pause the sound
+        audio.resume(bkgMusic)
+        -- set the boolean variable to be true( sound is now umuted)
+        soundOn = true
+        -- hide the mute mute button 
+        muteButton.isVisible = true
+        -- make the unmute button visible 
+        unmuteButton.isVisible = false
+    end
+end
+
 -- When right arrow is touched, move character right
 local function right (touch)
     motionx = SPEED
@@ -385,6 +416,17 @@ function scene:create( event )
     -- Creating a group that associates objects with the scene
     local sceneGroup = self.view
 
+    -- Creating mute Button
+    muteButton = display.newImageRect("Images/mute.png", 100, 100)
+    muteButton.x = 50
+    muteButton.y = 700
+    muteButton.isVisible = true
+
+    unmuteButton = display.newImageRect("Images/unmute.png", 100, 100)
+    unmuteButton.x = 50
+    unmuteButton.y = 700
+    unmuteButton.isVisible = false
+
     -- Insert the background image
     bkg_image = display.newImageRect("Images/Level-1BKG.png", display.contentWidth, display.contentHeight)
     bkg_image.x = display.contentWidth / 2 
@@ -598,6 +640,9 @@ function scene:show( event )
         -- Insert code here to make the scene come alive.
         -- Example: start timers, begin animation, play audio, etc.
         bkgMusicChannel = audio.play(bkgMusic, {loops=-1, channel=1})
+        muteButton:addEventListener("touch", Mute)
+        unmuteButton:addEventListener("touch", Unmute)
+
 
         numLives = 2
         questionsAnswered = 0
@@ -641,6 +686,9 @@ function scene:hide( event )
 
     elseif ( phase == "did" ) then
         -- Called immediately after scene goes off screen.
+        muteButton:removeEventListener("touch", Mute)
+        unmuteButton:removeEventListener("touch", Unmute)
+
         audio.stop(bkgMusicChannel)
 
         RemoveCollisionListeners()
